@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         spark:
+          - 3.3.0
           - 2.4.5
           - 2.4.4
           - 2.4.3
@@ -31,7 +32,7 @@ jobs:
           - 2.0.1
           - 2.0.0
           - 2.0.0
-        livy: [0.5.0, 0.6.0, 0.7.0]
+        livy: [0.5.0, 0.6.0, 0.7.0,0.7.1]
     steps:
       - name: Check out repo
         uses: actions/checkout@v2
@@ -40,7 +41,7 @@ jobs:
         env:
           LIVY: ${{ matrix.livy }}
         run: |
-          if [ $LIVY == '0.5.0' ]
+          if [ $LIVY == '0.7.1' ]
           then
             echo "::set-output name=path::"
           else
