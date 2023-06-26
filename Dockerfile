@@ -1,9 +1,8 @@
 # select operating system
-FROM ubuntu:20.10
+FROM ubuntu:22.10
 
-ARG SPARK_VERSION
-ARG LIVY_VERSION
-ARG APACHE
+ENV SPARK_VERSION 3.3.0
+ENV LIVY_VERSION 0.7.1
 
 ENV LOCAL_DIR_WHITELIST /tmp/
 
@@ -13,14 +12,15 @@ RUN apt-get update -y && apt-get install -y \
     wget \
   && apt-get clean \
   # Apache Livy 
-  && wget https://archive.apache.org/dist/incubator/livy/$LIVY_VERSION-incubating/${APACHE}livy-$LIVY_VERSION-incubating-bin.zip -O /tmp/livy.zip \
+  && wget https://archive.apache.org/dist/incubator/livy/$LIVY_VERSION-incubating/apache-livy-$LIVY_VERSION-incubating-bin.zip -O /tmp/livy.zip \
   && unzip /tmp/livy.zip -d /opt/ \
-  && mv /opt/${APACHE}livy-$LIVY_VERSION-incubating-bin /opt/livy \
-  && mkdir /opt/livy/logs \
+  && mv /opt/apache-livy-$LIVY_VERSION-incubating-bin /opt/livy \
+  && mkdir -p /opt/livy \
+  && mkdir -p /opt/livy/logs \
   # Apache Spark
-  && wget https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop2.7.tgz -O /tmp/spark.tgz \
+  && wget https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop3.tgz -O /tmp/spark.tgz \
   && tar -xvzf /tmp/spark.tgz -C /opt/ \
-  && mv /opt/spark-$SPARK_VERSION-bin-hadoop2.7 /opt/spark \
+  && mv /opt/spark-$SPARK_VERSION-bin-hadoop3 /opt/spark \
   && rm -r /tmp/*
 
 COPY init /opt/docker-init
