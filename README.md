@@ -26,6 +26,12 @@ variable.
 ### Usage:
 
 ```bash
+docker run -p 8998:8998 -e SPARK_MASTER="local[*]" -e DEPLOY_MODE=client davlum/livy:0.7.0-spark2.4.4
+```
+
+### Usage for supporting spark 3.3.0 and Livy 0.7.1
+
+```bash
 docker run -p 8998:8998 -e SPARK_MASTER="local[*]" -e DEPLOY_MODE=client sumitzet/livy:0.7.1-spark3.3.0
 ```
 
